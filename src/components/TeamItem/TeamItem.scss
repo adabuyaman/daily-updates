@@ -1,0 +1,87 @@
+@import '../../styles/variables';
+
+.teamItem {
+    $icon_size: 46px;
+
+    padding: 20px;
+    transition: .3s;
+
+    &__logo {
+        width: 46px;
+        height: 46px;
+        background-color: $gray-300;
+        object-fit: cover;
+        border-radius: 50%;
+        opacity: 0.75;
+        transition: .25s;
+        margin-right: 5px;
+    }
+
+    &__name {
+        margin-bottom: 0;
+        color: $body-color;
+    }
+
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: map-get($map: $border-widths, $key: 1) solid $border-color;
+        padding-bottom: map-get($map: $spacers, $key: 3);
+        margin-bottom: map-get($map: $spacers, $key: 3);
+    }
+
+    &__rightSide,
+    &__leftSide {
+        display: flex;
+        align-items: center;
+        gap: map-get($map: $spacers, $key: 2);
+    }
+
+    &__arrowIcon {
+        font-size: 26px;
+        transition: .3s;
+        border-radius: 50px;
+        width: $icon_size;
+        height: $icon_size;
+        padding: 10px;
+        border: 1px solid $border-color;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .avatar {
+        transition: .3s;
+    }
+
+    @include media-breakpoint-up(md) {
+
+        &:hover {
+            box-shadow: $box-shadow-sm;
+
+            .teamItem__arrowIcon {
+                background: $primary;
+                color: white;
+                margin-right: -(($icon_size/2)+10px);
+                border-color: $primary;
+                box-shadow: $box-shadow-md;
+
+            }
+
+            .teamItem__logo {
+                opacity: 1;
+            }
+
+            .avatarGroup__extraCount {
+                margin-left: 5px;
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar+.avatar {
+                margin-left: 0;
+            }
+        }
+    }
+}

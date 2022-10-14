@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+
+.heroBox {
+    background-color: #E7F1FF;
+    padding: 20px 40px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    border-radius: 6px;
+
+    &__actionBtn {
+        margin-top:map-get($map: $spacers, $key: 3);
+    }
+
+    h1,
+    p {
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-top: 10px;
+    }
+}

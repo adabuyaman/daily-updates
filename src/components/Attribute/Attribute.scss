@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+
+.attribute {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+        font-size: 18px;
+        margin-right: map-get($map: $spacers, $key: 1);
+        color: $secondary;
+    }
+
+    &__label {
+        font-size: 14px;
+        color: $secondary;
+    }
+}

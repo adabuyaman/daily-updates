@@ -1,0 +1,36 @@
+.section {
+    $space_between_elements: 30px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $space_between_elements;
+
+        .title {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $space_between_elements;
+            margin: 0;
+        }
+
+        .title:after {
+            content: "";
+            height: 1px;
+            background-color: #dee2e6;
+            display: block;
+            flex: 1;
+        }
+
+    }
+
+    &__action-btn {
+        margin-left: $space_between_elements;
+    }
+
+    + .section {
+        margin-top: 50px;
+    }
+}

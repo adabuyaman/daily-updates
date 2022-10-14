@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.avatarGroup {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &__extraCount {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        padding-top: 1px;
+        font-size: 12px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        border: 1px dashed $border-color;
+        margin-left: -(map-get($map: $spacers, $key: 2));
+        color: $text-muted;
+        transition: .3s;
+        background: rgba(255,255,255,0.65);
+
+        &:hover {
+            color: $body-color;
+            border-color: $body-color;
+        }
+    }
+
+    .avatar+.avatar {
+        margin-left: -10px;
+    }
+}

@@ -1,0 +1,64 @@
+@import '../../styles/variables';
+
+.teamActionItem {
+    $cssPrefix: 'teamActionItem';
+    $padding: map-get($map: $spacers, $key: 4);
+
+    background-color: #023047;
+    color: #fff;
+    border-radius: $border-radius;
+    padding: $padding;
+    height: 400px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &__icon {
+        font-size: 60px;
+        margin-bottom: auto;
+        height: 60px;
+        width: 60px;
+    }
+
+    &>* {
+        z-index: 1;
+    }
+
+    &::before {
+        content: "";
+        background-color: $primary;
+        position: absolute;
+        top: calc($padding - 10px);
+        left: calc($padding - 10px);
+        width: 80px;
+        height: 80px;
+           border-radius: $border-radius;
+
+        z-index: 0;
+        transition: .3s;
+    }
+
+    &__description {
+        font-size: 14px;
+        opacity: 0;
+        transition: .3s;
+        max-height: 0;
+    }
+
+    &:hover {
+        &::before {
+            // background-color: red;
+            // top: -5px;
+            // left: -5px;
+            height: calc(100% - ($padding ));
+            width: calc(100% - ($padding ));
+            border-radius: 0;
+        }
+        .#{teamActionItem}__description {
+            opacity: 1;
+            max-height: 100px;
+        }
+    }
+}
