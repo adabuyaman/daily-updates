@@ -1,0 +1,33 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+@import "~bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+@import "./variables";
+
+body {
+    background-color: #F6F6F6;
+    overflow: scroll;
+}
+
+:focus-visible {
+    outline: none;
+}
+
+.tab-pane {
+    padding: 30px 0;
+    /* border-left: 1px solid;
+    border-right: 1px solid;
+    border-color: #dee2e6 #dee2e6 #fff; */
+}
+
+textarea:read-only {
+    resize: none;
+}
+
+a {
+    text-decoration: none;
+}

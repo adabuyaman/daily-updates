@@ -16,7 +16,7 @@ import { Tooltip } from 'bootstrap';
 
 import { Provider } from 'react-redux';
 import store from './store/store';
-
+import "./styles/index.scss"
 function App() {
   const [user, loading] = useAuthState(auth);
   useEffect(() => {

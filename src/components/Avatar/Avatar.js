@@ -1,3 +1,4 @@
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import "./Avatar.scss";
 import AvatarSkeleton from './Avatar.skeleton';
@@ -15,14 +16,14 @@ const Avatar = ({ letter, name, color, size, loading }) => {
         )
 
     return (
-        <div
-            className={cssPrefix}
-            data-bs-toggle="tooltip"
-            style={{ backgroundColor: color }}
-            title={name}
-        >
-            {letter ?? handleLetter(name)}
-        </div>
+        <OverlayTrigger overlay={<Tooltip>{name}</Tooltip>}>
+            <div
+                className={cssPrefix}
+                style={{ backgroundColor: color }}
+            >
+                {letter ?? handleLetter(name)}
+            </div>
+        </OverlayTrigger>
     )
 }
 Avatar.propTypes = {

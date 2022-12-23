@@ -1,4 +1,34 @@
-.pageTemplate{
-    background-color: white;
+@import '../../styles/variables';
+
+.pageTemplate {
+    .breadcrumb {
+        a {
+            color: #fff;
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .breadcrumb-item.active {
+            color: rgba(255, 255, 255, 0.65);
+        }
+    }
+
+    &__splitBg {
+        background-color: $primary;
+        height: 350px;
+        width: 100%;
+        margin-bottom: -250px;
+    }
+
+    &__teamName {
+        margin: 0;
+    }
+
+    &__teamCode {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: $font-size-sm;
+        margin: 0;
+    }
 }
-    

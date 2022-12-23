@@ -2,9 +2,11 @@ import "./HeroBox.scss";
 
 const HeroBox = ({ title, description, actionLabel, actionOnClick }) => {
     const cssPrefix = 'heroBox';
+
     return (
         <div className={cssPrefix}>
             <div>
+
                 <h1>{title}</h1>
                 {description && (
                     <p>{description}</p>

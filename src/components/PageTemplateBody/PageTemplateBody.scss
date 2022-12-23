@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.pageTemplateBody {
+    margin-top: map-get($map: $spacers, $key: 5);
+    background-color: #fff;
+    padding: map-get($map: $spacers, $key: 4);
+    border-radius: $border-radius-lg;
+    box-shadow: $box-shadow-sm;
+}

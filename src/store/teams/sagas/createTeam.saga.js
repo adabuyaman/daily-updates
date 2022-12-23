@@ -3,11 +3,13 @@ import { call, put } from 'redux-saga/effects';
 import { db } from '../../../config/firebase';
 import { createTeamAC } from '../teams.actions';
 
-export default function* createTeamSaga({ payload: { teamName, teamMembers, ownerId } }) {
+export default function* createTeamSaga({ payload: { name, members, ownerId } }) {
+    yield put(createTeamAC.startAC());
+
     const teamsRef = collection(db, 'teams');
     const newTeamObj = {
-        name: teamName,
-        members: teamMembers,
+        name: name,
+        members: members,
         createdAt: Timestamp.fromDate(new Date()),
         owner: ownerId
     };

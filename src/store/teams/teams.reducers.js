@@ -30,7 +30,6 @@ export const teamsReducer = createReducer(initialState, {
 
     // loadMyTeamsMembersAC
     [loadMyTeamsMembersAC.startAC]: (draft, { payload }) => {
-        console.log("[loadMyTeamsMembersAC.startAC payload", payload);
     },
     [loadMyTeamsMembersAC.successAC]: (draft, { payload: teamsMembersMap }) => {
         const teamsObj = teamsArrayToObject(draft.list);
@@ -46,7 +45,7 @@ export const teamsReducer = createReducer(initialState, {
     [createTeamAC.startAC]: (draft) => {
         draft.createNewTeam.status = STATUS.LOADING;
     },
-    [createTeamAC.successAC]: (draft) => {
+    [createTeamAC.successAC]: (draft, { payload: newTeamObj }) => {
         draft.createNewTeam.status = STATUS.SUCCESS;
     }
 })

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import OffCanvas from "../../components/OffCanvas/OffCanvas";
 import { db } from "../../config/firebase";
-import { users } from "../../data";
-import { doc, updateDoc, getDoc, Timestamp, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, getDoc, arrayUnion } from "firebase/firestore";
 import UpdatesEditor from "../../components/UpdatesEditor/UpdatesEditor";
-
-const TeamPageContainer = ({ teamId }) => {
+import JsonForm from "../../components/JsonSchemaForm/JsonForm/JsonForm";
+import ArrayFieldTemplate from "../../components/JsonSchemaForm/Templates/ArrayFieldTemplate/ArrayFieldTemplate";
+import ArrayFieldItemTemplate from "../../components/JsonSchemaForm/Templates/ArrayFieldItemTemplate/ArrayFieldItemTemplate";
+import { getUsersList } from "../../store/users/users.selectors";
+import { loadUsersListAC } from "../../store/users/users.actions";
+import { connect } from 'react-redux';
+const TeamPageContainer = ({ teamId, users, loadUsers }) => {
     const cssPrefix = 'teamPageContainer';
 
-    const [updatesList, setUpdatesList] = useState(null);
-
+    console.log(users);
     const handleCreateUpdate = async (updateObj) => {
         const docData = {
             updates: arrayUnion(updateObj),
@@ -18,16 +21,116 @@ const TeamPageContainer = ({ teamId }) => {
     }
 
     useEffect(() => {
-        (async () => {
-            const teamRef = doc(db, 'teams', teamId, 'updates');
-            const teamSnap = await getDoc(teamRef);
-            teamSnap.data();
-        })();
-    });
+        loadUsers()
+    }, [])
+
+    const schema = {
+        type: "object",
+        properties: {
+            // regrets list
+            regrets: {
+                type: "array",
+                title: "Regrets",
+                items: {
+                    type: "object",
+                    required: ["member", "reason"],
+                    properties: {
+                        member: {
+                            "type": "string",
+                            "title": "Member",
+                            oneOf: [
+                                { const: "canada", title: "ahmad" },
+                                { const: "canada", title: "ahmad" },
+                                { const: "canada", title: "ahmad" },
+                            ],
+                        },
+                        reason: {
+                            "type": "string",
+                            "title": "Reason",
+
+                            oneOf: [
+                                { title: 'Vacation', const: 'vacation' },
+                                { title: 'Sick leave', const: 'sick-leave' },
+                            ]
+                        }
+                    }
+                }
+            },
+            updates: {
+                type: "array",
+                title: "Updates",
+                items: {
+                    type: "object",
+                    required: ["member", "reason"],
+                    properties: {
+                        member: {
+                            "type": "string",
+                            "title": "Member",
+                            oneOf: [
+                                { const: "canada", title: "ahmad" },
+                                { const: "canada", title: "ahmad" },
+                                { const: "canada", title: "ahmad" },
+                            ],
+                        },
+                        yesterday_update: {
+                            "type": "string",
+                            "title": "What I have done yesterday?",
+                        },
+                        today_update: {
+                            "type": "string",
+                            "title": "What I will be working on today?",
+                        },
+                    }
+                }
+            },
+        }
+    };
+
+
+    const uiSchema = {
+        regrets: {
+            'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+            'ui:ArrayFieldItemTemplate': ArrayFieldItemTemplate,
+            'ui:options': {
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            },
+            items: {
+                classNames: 'row',
+
+                member: {
+                    classNames: 'col-6',
+                    title: null,
+                },
+                reason: {
+                    classNames: 'col-6',
+
+                }
+            }
+        },
+        updates: {
+            'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+            'ui:ArrayFieldItemTemplate': ArrayFieldItemTemplate,
+            'ui:options': {
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras viverra quam nec tortor egestas'
+            },
+            items: {
+                yesterday_update: {
+                    "ui:widget": "textarea",
+                },
+                today_update: {
+                    "ui:widget": "textarea",
+                }
+            }
+        },
+    }
 
     return (
         <div>
-            <div className="d-flex gap-3">
+            <JsonForm
+                uiSchema={uiSchema}
+                schema={schema}
+            />
+            {/* <div className="d-flex gap-3">
                 <ul className="nav nav-tabs" style={{ flex: 1 }} id="myTab" role="tablist">
                     <li className="nav-item" role="presentation">
                         <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Tuesday, 12th</button>
@@ -62,7 +165,7 @@ const TeamPageContainer = ({ teamId }) => {
 
             <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
-                    <UpdatesEditor  />
+                    <UpdatesEditor />
                 </div>
                 <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex="0">
                     ..
@@ -74,9 +177,13 @@ const TeamPageContainer = ({ teamId }) => {
                     ..
                 </div>
             </div>
-            <button className="btn btn-primary" onClick={handleCreateUpdate}>test</button>
+            <button className="btn btn-primary" onClick={handleCreateUpdate}>test</button> */}
         </div>
     );
 }
 
-export default TeamPageContainer;
+export default connect((state) => ({
+    users: getUsersList(state),
+}), {
+    loadUsers: loadUsersListAC.triggerAC,
+})(TeamPageContainer);

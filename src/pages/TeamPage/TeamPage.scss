@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+
+.teamPage {
+    &__header {
+        color: #fff;
+    }
+
+    .breadcrumb {
+        a {
+            color: #fff;
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .breadcrumb-item.active {
+            color: rgba(255, 255, 255, 0.65);
+        }
+    }
+
+    &__teamName {
+        margin: 0;
+    }
+
+    &__teamCode {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: $font-size-sm;
+        margin: 0;
+    }
+
+    &__body {
+        margin-top: map-get($map: $spacers, $key: 5);
+        background-color: #fff;
+        padding: map-get($map: $spacers, $key: 4);
+        border-radius: 20px;
+        box-shadow: $box-shadow-sm;
+    }
+}

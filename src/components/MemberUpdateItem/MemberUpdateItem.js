@@ -13,7 +13,6 @@ const MemberUpdateItem = ({ user, onChange, readonly }) => {
         const updated = text.replace(/rex-[0-9]+/i, (match) => {
             return `<a href='https://jira.wiley.com/browse/${match.toUpperCase()}'>${match}</a>`;
         })
-        console.log(updated);
         setCurrentWork(text);
     }
 

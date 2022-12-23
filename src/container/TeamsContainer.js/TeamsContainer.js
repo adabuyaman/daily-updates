@@ -1,40 +1,27 @@
 
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreateTeamDialog from "../../components/CreateTeamDialog/CreateTeamDialog";
-import Modal from "../../components/Modal/Modal";
 import TeamItem from "../../components/TeamItem/TeamItem";
-import { auth, db } from "../../config/firebase";
-import { getUsers } from "../../models/member";
+import { auth } from "../../config/firebase";
 import { loadUsersListAC } from "../../store/users/users.actions";
 import { connect } from 'react-redux';
-import { getUsersListAsOptions } from "../../store/users/users.selectors";
+import { getUsersListAsEnumOptions } from "../../store/users/users.selectors";
 import HeroBox from "../../components/HeroBox/HeroBox";
 import { createTeamAC, loadMyTeamsAC } from "../../store/teams/teams.actions";
-import { getMyTeams } from "../../store/teams/teams.selectors";
-
+import { getCreateTeamStatus, getMyTeams } from "../../store/teams/teams.selectors";
 
 const TeamsContainer = ({
     usersListAsOptions,
+    createTeamStatus,
     loadMyTeams,
     loadUsers,
     createTeam,
     myTeamsList,
 }) => {
-
     const cssPrefix = 'teamsContainer';
     const [user] = useAuthState(auth);
-
-    // const createTeam = (teamName, teamMembers) => {
-    //     const teamsRef = collection(db, 'teams');
-    //     const newTeamObj = {
-    //         name: teamName,
-    //         members: teamMembers.map(member => member.value),
-    //         owner: user.uid
-    //     };
-    //     addDoc(teamsRef, newTeamObj);
-    // }
+    const [showCreateTeamModal, setShowCreateTeamModal] = useState(false);
 
     useEffect(() => {
         loadMyTeams(user.uid);
@@ -51,7 +38,7 @@ const TeamsContainer = ({
                 title="My teams"
                 description="Here's the place where you find all of your teams. the ones you created or invited to."
                 actionLabel="Create team"
-                action
+                actionOnClick={() => setShowCreateTeamModal(true)}
             />
             <div className="row g-3">
                 {myTeamsList.length > 0 ?
@@ -73,8 +60,11 @@ const TeamsContainer = ({
                     : <span>no teams</span>
                 }
                 <CreateTeamDialog
+                    show={showCreateTeamModal}
                     usersList={usersListAsOptions}
+                    handleClose={() => setShowCreateTeamModal(false)}
                     onCreate={createTeam}
+                    createTeamStatus={createTeamStatus}
                 />
             </div>
         </div>
@@ -83,8 +73,9 @@ const TeamsContainer = ({
 }
 
 export default connect((state) => ({
-    usersListAsOptions: getUsersListAsOptions(state),
+    usersListAsOptions: getUsersListAsEnumOptions(state),
     myTeamsList: getMyTeams(state),
+    createTeamStatus: getCreateTeamStatus(state),
 }), {
     loadMyTeams: loadMyTeamsAC.triggerAC,
     loadUsers: loadUsersListAC.triggerAC,

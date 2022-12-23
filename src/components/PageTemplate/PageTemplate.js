@@ -3,10 +3,14 @@ import "./PageTemplate.scss";
 const PageTemplate = (props) => {
     const { children } = props;
     const cssPrefix = 'pageTemplate';
+    console.log('children', children);
     return (
-        <main className={`${cssPrefix} container py-5`}>
-            {children}
-        </main>
+        <div className={`${cssPrefix}`}>
+            <div className={`${cssPrefix}__splitBg`}></div>
+            <div className="container pb-5">
+                {children}
+            </div>
+        </div>
     )
 }
 
